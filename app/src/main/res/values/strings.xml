@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SpeedDemo</string>
+    <string name="action_settings">Settings</string>
+    <string name="info">寻找GPS</string>
+    <string name="about_menu_name">About</string>
+
+
+    <string name="about_message">通过GPS获取移动速度</string>
+    <string name="unit_km">Kilometer</string>
+    <string name="unit_miles">Miles</string>
+    <string name="setting_unit">Measurement Unit</string>
+</resources>
