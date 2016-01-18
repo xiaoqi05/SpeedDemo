@@ -11,10 +11,7 @@ import java.util.List;
 
 import xq.com.speed_demo.interfaces.GPSCallback;
 
-/**
- * @AUTHOR by 肖齐
- * Created by 2016/1/13 13:11.
- */
+
 public class GPSManager {
     private static final int gpsMinTime = 500;
     private static final int gpsMinDistance = 0;

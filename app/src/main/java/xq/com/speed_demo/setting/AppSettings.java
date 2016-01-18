@@ -3,13 +3,10 @@ package xq.com.speed_demo.setting;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * @AUTHOR by 肖齐
- * Created by 2016/1/13 13:14.
- */
+
 public class AppSettings {
     private static final String UNIT_STRING = "MeasureUnit";
-    private static final String PREF_NAME = "SpeedDemo_20100707";
+    private static final String PREF_NAME = "SpeedDemo";
 
     public static int getMeasureUnit(Context context){
         return getInt(context,AppSettings.UNIT_STRING);
@@ -30,6 +27,6 @@ public class AppSettings {
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putInt(tag, value);
-        editor.commit();
+        editor.apply();
     }
 }

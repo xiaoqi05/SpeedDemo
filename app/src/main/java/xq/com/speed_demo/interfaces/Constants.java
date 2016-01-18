@@ -1,9 +1,6 @@
 package xq.com.speed_demo.interfaces;
 
-/**
- * @AUTHOR by 肖齐
- * Created by 2016/1/13 13:10.
- */
+
 public interface Constants {
     public static final int TEXT_SIZE_SMALL = 15;
     public static final int TEXT_SIZE_LARGE = 80;

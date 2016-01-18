@@ -26,12 +26,13 @@ import xq.com.speed_demo.interfaces.GPSCallback;
 import xq.com.speed_demo.managers.GPSManager;
 import xq.com.speed_demo.setting.AppSettings;
 
-public class MainActivity extends AppCompatActivity  implements GPSCallback {
+public class MainActivity extends AppCompatActivity implements GPSCallback {
     private GPSManager gpsManager = null;
     private double speed = 0.0;
     private int measurement_index = Constants.INDEX_KM;
     private AbsoluteSizeSpan sizeSpanLarge = null;
     private AbsoluteSizeSpan sizeSpanSmall = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity  implements GPSCallback {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity  implements GPSCallback {
         gpsManager.startListening(getApplicationContext());
         gpsManager.setGPSCallback(this);
 
-        ((TextView)findViewById(R.id.info_message)).setText(getString(R.string.info));
+        ((TextView) findViewById(R.id.info_message)).setText(getString(R.string.info));
 
         measurement_index = AppSettings.getMeasureUnit(this);
     }
@@ -71,34 +72,23 @@ public class MainActivity extends AppCompatActivity  implements GPSCallback {
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean result = true;
 
-        switch(item.getItemId())
-        {
-            case R.id.menu_about:
-            {
+        switch (item.getItemId()) {
+            case R.id.menu_about: {
                 displayAboutDialog();
-
                 break;
             }
-            case R.id.unit_km:
-            {
+            case R.id.unit_km: {
                 measurement_index = 0;
-
                 AppSettings.setMeasureUnit(this, 0);
-
                 break;
             }
-            case R.id.unit_miles:
-            {
+            case R.id.unit_miles: {
                 measurement_index = 1;
-
                 AppSettings.setMeasureUnit(this, 1);
-
                 break;
             }
-            default:
-            {
+            default: {
                 result = super.onOptionsItemSelected(item);
-
                 break;
             }
         }
@@ -106,24 +96,25 @@ public class MainActivity extends AppCompatActivity  implements GPSCallback {
         return result;
     }
 
-    private double convertSpeed(double speed){
+    private double convertSpeed(double speed) {
         return ((speed * Constants.HOUR_MULTIPLIER) * Constants.UNIT_MULTIPLIERS[measurement_index]);
     }
 
-    private String measurementUnitString(int unitIndex){
+    private String measurementUnitString(int unitIndex) {
         String string = "";
-
-        switch(unitIndex)
-        {
-            case Constants.INDEX_KM:                string = "km/h";        break;
-            case Constants.INDEX_MILES:     string = "mi/h";        break;
+        switch (unitIndex) {
+            case Constants.INDEX_KM:
+                string = "km/h";
+                break;
+            case Constants.INDEX_MILES:
+                string = "mi/h";
+                break;
         }
 
         return string;
     }
 
-    private double roundDecimal(double value, final int decimalPlace)
-    {
+    private double roundDecimal(double value, final int decimalPlace) {
         BigDecimal bd = new BigDecimal(value);
 
         bd = bd.setScale(decimalPlace, RoundingMode.HALF_UP);
@@ -132,21 +123,19 @@ public class MainActivity extends AppCompatActivity  implements GPSCallback {
         return value;
     }
 
-    private void setSpeedText(int textid,String text)
-    {
+    private void setSpeedText(int textid, String text) {
         Spannable span = new SpannableString(text);
         int firstPos = text.indexOf(32);
 
-        span.setSpan(sizeSpanLarge, 0, firstPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        span.setSpan(sizeSpanSmall, firstPos + 1, text.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(sizeSpanLarge, 0, firstPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(sizeSpanSmall, firstPos + 1, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        TextView tv = ((TextView)findViewById(textid));
+        TextView tv = ((TextView) findViewById(textid));
 
         tv.setText(span);
     }
 
-    private void displayAboutDialog()
-    {
+    private void displayAboutDialog() {
         final LayoutInflater inflator = LayoutInflater.from(this);
         final View settingsview = inflator.inflate(R.layout.about, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -165,16 +154,15 @@ public class MainActivity extends AppCompatActivity  implements GPSCallback {
     }
 
     @Override
-    public void onGPSUpdate(Location location)
-    {
+    public void onGPSUpdate(Location location) {
         location.getLatitude();
         location.getLongitude();
         speed = location.getSpeed();
 
-        String speedString = "" + roundDecimal(convertSpeed(speed),2);
+        String speedString = "" + roundDecimal(convertSpeed(speed), 2);
         String unitString = measurementUnitString(measurement_index);
 
-        setSpeedText(R.id.info_message,speedString + " " + unitString);
+        setSpeedText(R.id.info_message, speedString + " " + unitString);
     }
 
     @Override
